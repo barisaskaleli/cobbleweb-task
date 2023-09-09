@@ -50,3 +50,25 @@
 
 # Embedded web-server pid file
 /.web-server-pid
+
+# Docker
+/docker/data
+
+## PHPSTORM ##
+.idea
+
+### OSX ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+###> symfony/framework-bundle ###
+.env
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+###< symfony/framework-bundle ###
