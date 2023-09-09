@@ -6,18 +6,20 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\Entity
  * @ORM\Table(name="user")
  */
 class User implements UserInterface
 {
     use TimestampableEntity;
+
+    private const DEFAULT_AVATAR = 'https://robohash.org/est.png?size=300x300&set=set1';
 
     /**
      * @ORM\Id
@@ -39,6 +41,11 @@ class User implements UserInterface
      * @Assert\Length(min=2, max=25)
      */
     private $lastName;
+
+    /**
+     * @ORM\Column(type="string", length=55)
+     */
+    private $fullName;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -63,7 +70,7 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      * @Assert\Url()
      */
-    private $avatar;
+    private $avatar = self::DEFAULT_AVATAR;
 
     /**
      * @ORM\Column(type="json")
@@ -71,7 +78,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Photo::class, mappedBy="user", cascade={"persist"})
      */
     private $photos;
 
@@ -105,6 +112,18 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
+    }
+
+    public function setFullName(): self
+    {
+        $this->fullName = sprintf('%s %s', $this->firstName, $this->lastName);
 
         return $this;
     }

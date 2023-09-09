@@ -4,11 +4,13 @@ namespace App\Entity;
 
 use App\Repository\PhotoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PhotoRepository::class)
+ * @ORM\Table(name="photo")
  */
 class Photo
 {
@@ -77,5 +79,10 @@ class Photo
         $this->user = $user;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getName() ?? '';
     }
 }

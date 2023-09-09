@@ -36,9 +36,13 @@ class UserFixtures extends AbstractDataFixtures
         $faker = Factory::create();
 
         for ($i = 0; $i < 5; $i++) {
+            $firstName = $faker->firstName;
+            $lastName = $faker->lastName;
+
             $user = (new User())
-                ->setFirstName($faker->firstName)
-                ->setLastName($faker->lastName)
+                ->setFirstName($firstName)
+                ->setLastName($lastName)
+                ->setFullName(sprintf('%s %s', $firstName, $lastName))
                 ->setEmail($faker->unique()->email)
                 ->setAvatar($faker->url)
                 ->setActive($faker->boolean)
