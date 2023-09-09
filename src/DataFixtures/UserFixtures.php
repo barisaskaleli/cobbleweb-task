@@ -40,11 +40,13 @@ class UserFixtures extends AbstractDataFixtures
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
                 ->setEmail($faker->unique()->email)
-                ->setPassword(self::DEFAULT_PASSWORD)
                 ->setAvatar($faker->url)
                 ->setActive($faker->boolean)
                 ->setCreatedAt($faker->dateTime)
                 ->setUpdatedAt($faker->dateTime);
+
+            $hash = $this->passwordEncoder->encodePassword($user, self::DEFAULT_PASSWORD);
+            $user->setPassword($hash);
 
             $manager->persist($user);
             $this->addReference('user' . $i, $user);
