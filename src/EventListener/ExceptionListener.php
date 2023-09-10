@@ -2,7 +2,9 @@
 
 namespace App\EventListener;
 
+use App\Exception\NotFoundException;
 use App\Schema\AbstractAPIResponseSchema;
+use App\Schema\NotFoundResponseSchema;
 use App\Schema\UnAuthenticateResponseSchema;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,6 +26,20 @@ class ExceptionListener
                     ->setMessage($exception->getMessage())
                     ->setStatusCode(Response::HTTP_UNAUTHORIZED),
                 Response::HTTP_UNAUTHORIZED
+            );
+
+            $event->setResponse($response);
+        }
+
+        if ($exception instanceof NotFoundException) {
+            $responseSchema = new NotFoundResponseSchema();
+
+            $response = new JsonResponse(
+                $responseSchema
+                    ->setFailedStatus()
+                    ->setMessage($exception->getMessage())
+                    ->setStatusCode(Response::HTTP_NOT_FOUND),
+                Response::HTTP_NOT_FOUND
             );
 
             $event->setResponse($response);

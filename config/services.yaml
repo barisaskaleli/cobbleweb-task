@@ -30,11 +30,6 @@ services:
   # add more service definitions when explicit configuration is needed
   # please note that last definitions always *replace* previous ones
 
-
-  App\EventListener\AuthenticationListener:
-    tags:
-      - { name: 'kernel.event_listener', event: 'kernel.request', method: 'onKernelRequest' }
-
   App\EventListener\ExceptionListener:
     tags:
       - { name: 'kernel.event_listener', event: 'kernel.exception', method: 'onKernelException' }
@@ -50,3 +45,8 @@ services:
         credentials:
           key: '%env(AWS_ACCESS_KEY_ID)%'
           secret: '%env(AWS_SECRET_ACCESS_KEY)%'
+
+  App\Service\NewsletterMailerService:
+    arguments: [ '@mailer', '@App\Repository\UserRepository' ]
+    calls:
+      - [ 'setLogger', [ '@logger' ] ]

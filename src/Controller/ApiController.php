@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Photo;
 use App\Entity\User;
+use App\Exception\NotFoundException;
 use App\Exception\ValidationException;
 use App\Schema\RegisterResponseSchema;
+use App\Schema\UserResponseSchema;
 use App\Service\FileUpload\UploadContext;
 use App\Service\FileUpload\UploadStrategy\LocalUploadStrategy;
 use App\Service\FileUpload\UploadStrategy\S3UploadStrategy;
@@ -15,8 +17,10 @@ use Aws\Sdk;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @Route("/api", name="api_", defaults={"_format": "json"})
@@ -25,26 +29,13 @@ class ApiController extends AbstractController
 {
     use EntityManagerAwareTrait;
 
-    /**
-     * @var ValidatorService
-     */
-    private $validator;
-
-    /**
-     * @var Sdk $aws
-     */
-    private $aws;
-
-    /**
-     * @var UserPasswordEncoderInterface
-     */
-    private $passwordEncoder;
-
-    public function __construct(ValidatorService $validator, Sdk $aws, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(
+        private ValidatorService             $validator,
+        private Sdk                          $aws,
+        private UserPasswordEncoderInterface $passwordEncoder,
+        private Security                     $security
+    )
     {
-        $this->validator = $validator;
-        $this->aws = $aws;
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -132,4 +123,36 @@ class ApiController extends AbstractController
                 ->getResponse()
             , JsonResponse::HTTP_CREATED);
     }
+
+    /**
+     * @Route("/users/me", name="users", methods={"GET", "POST"})
+     */
+    public function userDetail()
+    {
+        $user = $this->security->getUser();
+
+        if (!$user) {
+            throw new NotFoundException();
+        }
+
+        $response = (new UserResponseSchema())
+            ->setFirstName($user->getFirstName())
+            ->setLastName($user->getLastName())
+            ->setFullName($user->getFullName())
+            ->setEmail($user->getEmail())
+            ->setActive($user->getActive())
+            ->setAvatar($user->getAvatar())
+            ->setPhotos($user->getPhotos()->toArray())
+            ->setCreatedAt($user->getCreatedAt())
+            ->setUpdatedAt($user->getUpdatedAt());
+
+        return JsonResponse::create(
+            $response
+                ->setSuccessStatus()
+                ->setStatusCode(Response::HTTP_OK)
+                ->getResponse()
+            , Response::HTTP_OK
+        );
+    }
+
 }

@@ -9,18 +9,28 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class S3UploadStrategy implements FileUploadStrategyInterface
 {
+    private const STRATEGY_NAME = 's3';
     private const BUCKET_NAME = 'cw-recruitment-tests';
 
     private $s3;
 
     private $targetDirectory;
 
+    /**
+     * @param Sdk $aws
+     * @param string $targetDirectory
+     */
     public function __construct(Sdk $aws, string $targetDirectory)
     {
         $this->s3 = $aws->createS3();
         $this->targetDirectory = $targetDirectory;
     }
 
+    /**
+     * @param UploadedFile $file
+     * @return mixed
+     * @throws UploadException
+     */
     public function upload(UploadedFile $file, string $fileName): array
     {
         try {
@@ -45,6 +55,6 @@ class S3UploadStrategy implements FileUploadStrategyInterface
      */
     public function name(): string
     {
-        return 's3';
+        return self::STRATEGY_NAME;
     }
 }

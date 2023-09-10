@@ -8,11 +8,16 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class LocalUploadStrategy implements FileUploadStrategyInterface
 {
+    private const STRATEGY_NAME = 'local';
+
     /**
      * @var string $targetDirectory
      */
     private $targetDirectory;
 
+    /**
+     * @param string $targetDirectory
+     */
     public function __construct(string $targetDirectory)
     {
         $this->targetDirectory = $targetDirectory;
@@ -21,7 +26,7 @@ class LocalUploadStrategy implements FileUploadStrategyInterface
     /**
      * @param $file
      * @return string
-     * @throws \Exception
+     * @throws UploadException
      */
     public function upload(UploadedFile $file, string $fileName): array
     {
@@ -42,6 +47,6 @@ class LocalUploadStrategy implements FileUploadStrategyInterface
      */
     public function name(): string
     {
-        return 'local';
+        return self::STRATEGY_NAME;
     }
 }
