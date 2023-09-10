@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "aaef5aab-b7c4-469e-a5ab-2a92f4e05adf",
+		"name": "CobbleWeb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28715778"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var res = pm.response.json();",
+							"pm.environment.set('token', res.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"haag.gay@yahoo.com\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/login_check",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login_check"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john.doe@test.com\",\n    \"password\": \"123456\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/login_check",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login_check"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.25.2"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.23"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 09 Sep 2023 11:48:56 GMT"
+						},
+						{
+							"key": "X-Debug-Token",
+							"value": "1f8a05"
+						},
+						{
+							"key": "X-Debug-Token-Link",
+							"value": "http://127.0.0.1:8001/_profiler/1f8a05"
+						},
+						{
+							"key": "X-Robots-Tag",
+							"value": "noindex"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2OTQyNjAxMzUsImV4cCI6MTY5NDI2MzczNSwicm9sZXMiOltdLCJ1c2VybmFtZSI6ImhhYWcuZ2F5QHlhaG9vLmNvbSJ9.j3i8IV371GsqCeZK5qxqVVIxiWllG_aYeLIu6hs-KCDFbQHdfe8abfj5AlTpYlLbWPObhcTUuxvgr6ZcNdctaUqPyeYofrmIo0NgOSKsOom3adHCCC5cL3x3psF5Bd90hbuW4q52gHuAQg6nZLNsQ2BscR4Y08HUX0ZD4XwAwdn6R1Ih9uB2CAkJEKkFZOXzWQYo-0LLXd-tFADCwjxx4iTdAci2lhF8mNM0H02LgyUfM1BvMWdHTYUA9dBdYgkMPdtMM3XWF_2Ssqws-iNw333MvrCNncWFHyqzW5bf3bVno41AXcjzzcxjlRXrV8ey45U5J5JI_MQFJzUrbjIDJg\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "first_name",
+							"value": "Arnaldo",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "Effertz",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "your.email+fakedata93088@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						},
+						{
+							"key": "avatar",
+							"type": "file",
+							"src": ""
+						},
+						{
+							"key": "photos[]",
+							"type": "file",
+							"src": []
+						},
+						{
+							"key": "active",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/users/register",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Register Response",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "Arnaldo",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Effertz",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "your.email+fakedata93088@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": ""
+								},
+								{
+									"key": "photos[]",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "active",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.25.2"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.1.23"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 09 Sep 2023 17:59:56 GMT"
+						},
+						{
+							"key": "X-Debug-Token",
+							"value": "867b0b"
+						},
+						{
+							"key": "X-Debug-Token-Link",
+							"value": "http://127.0.0.1:8001/_profiler/867b0b"
+						},
+						{
+							"key": "X-Robots-Tag",
+							"value": "noindex"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "sf_redirect=%7B%22token%22%3A%22867b0b%22%2C%22route%22%3A%22api_register%22%2C%22method%22%3A%22POST%22%2C%22controller%22%3A%7B%22class%22%3A%22App%5C%5CController%5C%5CApiController%22%2C%22method%22%3A%22register%22%2C%22file%22%3A%22%5C%2Fapplication%5C%2Fsrc%5C%2FController%5C%2FApiController.php%22%2C%22line%22%3A61%7D%2C%22status_code%22%3A201%2C%22status_text%22%3A%22Created%22%7D; path=/; httponly; samesite=lax"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"success\",\n    \"statusCode\": 201,\n    \"message\": \"User created successfully\",\n    \"response\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "User Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/users/me",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"me"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8001",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Trait\LoggerTrait;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
 
@@ -19,10 +19,10 @@ class NewsletterMailerService
     private const SUBJECT = 'Your best newsletters';
 
     /**
-     * @param Mailer $mailer
+     * @param MailerInterface $mailer
      * @param UserRepository $userRepository
      */
-    public function __construct(private Mailer $mailer, private UserRepository $userRepository)
+    public function __construct(private MailerInterface $mailer, private UserRepository $userRepository)
     {
     }
 
