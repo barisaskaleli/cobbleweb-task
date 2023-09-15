@@ -109,7 +109,11 @@ class ApiController extends AbstractController
             $avatarResult = $uploadContext->upload($avatar);
 
             $user->setAvatar($avatarResult['s3']['path']);
+        } else {
+            $user->setAvatar(User::DEFAULT_AVATAR);
         }
+
+        $user->setActive(true);
 
         // persist the user and flush the changes
         $this->getEntityManager()->persist($user);

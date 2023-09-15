@@ -1,0 +1,1 @@
+{"version":1,"defects":{"App\\Tests\\Service\\NewsletterMailerServiceTest::testSendNewsletter":4,"App\\Tests\\Service\\NewsletterMailerServiceTest::testGetUsers":4},"times":{"App\\Tests\\Unit\\Entity\\UserTest::testUserEntity":0.005,"App\\Tests\\Service\\NewsletterMailerServiceTest::testSendNewsletter":0.02,"App\\Tests\\Service\\NewsletterMailerServiceTest::testGetUsers":0}}

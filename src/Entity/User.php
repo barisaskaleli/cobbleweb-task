@@ -19,7 +19,7 @@ class User implements UserInterface
 {
     use TimestampableEntity;
 
-    private const DEFAULT_AVATAR = 'https://robohash.org/est.png?size=300x300&set=set1';
+    public const DEFAULT_AVATAR = 'https://robohash.org/est.png?size=300x300&set=set1';
 
     /**
      * @ORM\Id
