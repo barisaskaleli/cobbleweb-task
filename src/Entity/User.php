@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="user")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface
 {
@@ -121,13 +122,6 @@ class User implements UserInterface
         return $this->fullName;
     }
 
-    public function setFullName(): self
-    {
-        $this->fullName = sprintf('%s %s', $this->firstName, $this->lastName);
-
-        return $this;
-    }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -228,5 +222,13 @@ class User implements UserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function setFullName(): void
+    {
+        $this->fullName = sprintf('%s %s', $this->firstName, $this->lastName);
     }
 }
